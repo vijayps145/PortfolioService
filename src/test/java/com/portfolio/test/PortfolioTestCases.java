@@ -14,8 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -25,11 +23,11 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = AppConfig.class, loader = AnnotationConfigContextLoader.class)
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
+//@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class PortfolioTestCases  {
 
 	@InjectMocks
@@ -78,8 +76,22 @@ public class PortfolioTestCases  {
 	@Test
 	public void testMarketValueForFund() throws InvalidPortfolioException, Exception {
 		doReturn(3000L).when(nodeDAO).getMarketValueForFund("F1");
-		setupData();
+		//setupData();
 		assertEquals(3000L, service.getMarketValueForFund("F1"));
+	}
+
+	@Test
+	public void testMarketValueForFund2() throws InvalidPortfolioException, Exception {
+		// Mock setup
+		doReturn(3000L).when(nodeDAO).getMarketValueForFund("F1");
+
+		// Call method under test
+		long marketValue = service.getMarketValueForFund("F1");
+
+		// Verify interaction with mock
+		verify(nodeDAO, times(1)).getMarketValueForFund("F1");
+
+		assertEquals(3000L, marketValue);
 	}
 
 	@Test
