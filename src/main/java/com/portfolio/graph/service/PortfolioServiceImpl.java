@@ -3,6 +3,7 @@ package com.portfolio.graph.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,24 +12,27 @@ import com.portfolio.graph.dao.EdgesDao;
 import com.portfolio.graph.dao.NodesDao;
 import com.portfolio.graph.dto.EdgeDTO;
 import com.portfolio.graph.entity.Nodes;
-import com.portfolio.graph.exception.InvalidPortfolioException;
 
 @Service
 @Transactional(propagation = Propagation.SUPPORTS)
 public class PortfolioServiceImpl implements PortfolioService {
 
-	@Autowired
-	private NodesDao nodeDAO;
+	private final NodesDao nodeDAO;
+
+	private final EdgesDao edgeDAO;
 
 	@Autowired
-	private EdgesDao edgeDAO;
+	public PortfolioServiceImpl(@Lazy NodesDao nodeDAO, @Lazy EdgesDao edgeDAO) {
+		this.nodeDAO = nodeDAO;
+		this.edgeDAO = edgeDAO;
+	}
 
 	/**
 	 * To add new node in database
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public int persistNodes(Nodes node) throws InvalidPortfolioException, Exception {
+	public int persistNodes(Nodes node) throws Exception {
 		return nodeDAO.save(node);
 	}
 
@@ -37,7 +41,7 @@ public class PortfolioServiceImpl implements PortfolioService {
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public int persistEdges(EdgeDTO edge) throws InvalidPortfolioException, Exception {		 
+	public int persistEdges(EdgeDTO edge) throws Exception {
 		return edgeDAO.save(edge);
 	}
 

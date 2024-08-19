@@ -46,6 +46,12 @@
 			<version>1.18.22</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+			<version>1.3.2</version> <!-- You can choose the version you need -->
+		</dependency>
+
 
 	</dependencies>
 

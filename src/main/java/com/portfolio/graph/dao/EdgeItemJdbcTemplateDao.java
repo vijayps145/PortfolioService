@@ -9,6 +9,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -24,13 +25,13 @@ import com.portfolio.graph.exception.InvalidPortfolioException;
 import com.portfolio.graph.service.PortfolioService;
 
 @Component
+@AllArgsConstructor
 public class EdgeItemJdbcTemplateDao implements EdgesDao {
 	
-	@Autowired
+
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
 
-	@Autowired
 	private PortfolioService service;
 
 	@PostConstruct
