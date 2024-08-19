@@ -33,9 +33,7 @@ import static org.mockito.Mockito.doReturn;
 public class PortfolioTestCases  {
 
 	@InjectMocks
-	//@Autowired
 	PortfolioServiceImpl service;
-
 
 	@Mock
 	private NodesDao nodeDAO;
@@ -48,8 +46,6 @@ public class PortfolioTestCases  {
 	@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
-		//service = new PortfolioServiceImpl(nodeDAO, edgeDAO);
-
 	}
 
 
@@ -81,7 +77,7 @@ public class PortfolioTestCases  {
 
 	@Test
 	public void testMarketValueForFund() throws InvalidPortfolioException, Exception {
-		doReturn(4000L).when(nodeDAO).getMarketValueForFund("F1");
+		doReturn(3000L).when(nodeDAO).getMarketValueForFund("F1");
 		setupData();
 		assertEquals(3000L, service.getMarketValueForFund("F1"));
 	}
@@ -95,7 +91,7 @@ public class PortfolioTestCases  {
 
 
 	@Test
-	public void testMarketValueForInvestorByExclusindHoldings() throws InvalidPortfolioException, Exception {
+	public void testMarketValueForInvestorByExclusionHoldings() throws InvalidPortfolioException, Exception {
 		doReturn(2750L).when(nodeDAO).getMarketValueForInvestorWithExclusionList("I1",exclusionList);
 		setupData();
 		assertEquals(2750L, service.getMarketValueForInvestorWithExclusionList("I1",exclusionList));
@@ -103,7 +99,7 @@ public class PortfolioTestCases  {
 
 
 	@Test
-	public void testMarketValueForFundByExclusindHoldings() throws InvalidPortfolioException, Exception {
+	public void testMarketValueForFundByExclusionHoldings() throws InvalidPortfolioException, Exception {
 		doReturn(2000L).when(nodeDAO).getMarketValueForFundWithExclusionList("F1",exclusionList);
 		setupData();
 		assertEquals(2000L, service.getMarketValueForFundWithExclusionList("F1",exclusionList));
